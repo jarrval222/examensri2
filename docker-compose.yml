@@ -1,0 +1,42 @@
+services:
+  servidor-examen:
+    image: debian:latest
+    container_name: srv_javier
+    networks:
+      examen_net:
+        ipv4_address: 192.168.57.10
+    ports:
+      - "80:80"
+      - "443:443"
+      - "53:53/udp"
+      - "53:53/tcp"
+      - "21:21"
+    volumes:
+      - ./apache/srv.conf:/etc/apache2/sites-available/000-default.conf
+      - ./apache/html:/var/www/html
+      - ./bind:/etc/bind
+      - ./certs:/etc/ssl/certs
+      - ./vsftpd/vsftpd.conf:/etc/vsftpd.conf
+    command: tail -f /dev/null
+
+  mailserver:
+    image: analogic/poste.io
+    container_name: mail_server
+    networks:
+      examen_net:
+        ipv4_address: 192.168.57.11
+    ports:
+      - "8080:80"
+      - "4433:443"
+      - "25:25"
+    environment:
+      - OUR_FQDN=mail.javierarrabal.test
+      - HTTPS=OFF
+
+networks:
+  examen_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.57.0/24
+          gateway: 192.168.57.1
