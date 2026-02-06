@@ -1,15 +1,16 @@
 $TTL    604800
 @       IN      SOA     srv.javierarrabal.test. admin.javierarrabal.test. (
-                        2025020501     ; Serial
-                        604800         ; Refresh
-                        86400          ; Retry
-                        2419200        ; Expire
-                        604800 )       ; Negative Cache TTL
+                     2025020502 ; Serial (Aumentado para que Bind lo note)
+                         604800 ; Refresh
+                          86400 ; Retry
+                        2419200 ; Expire
+                         604800 ) ; Negative Cache TTL
 ;
 @       IN      NS      srv.javierarrabal.test.
-@       IN  MX  10      mail.javierarrabal.test.
+@       IN      MX      10 mail.javierarrabal.test.
 
+@       IN      A       192.168.57.10
 srv     IN      A       192.168.57.10
-www     IN      CNAME   srv
+mail    IN      A       192.168.57.10
+www     IN      A       192.168.57.10
 ftp     IN      CNAME   srv
-mail    IN      A       192.168.57.11
